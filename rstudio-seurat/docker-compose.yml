@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  studioserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+     - ./analysis/:/analysis
+    ports:
+      - "8787:8787"
+    env_file:
+      .env
