@@ -21,9 +21,10 @@ RUN apt-get clean all && \
 	apt-get purge && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN Rscript -e "install.packages(c('rmarkdown', 'tidyverse', 'workflowr', 'BiocManager', 'Seurat'));"
+RUN Rscript -e "install.packages(c('rmarkdown', 'tidyverse', 'workflowr', 'BiocManager'));"
 RUN Rscript -e "BiocManager::install(version = '3.13')"
 
 #option to copy user settings from local rstudio into the container
 #COPY user-settings /home/rstudio/.rstudio/monitored/user-settings/user-settings
 #COPY .Rprofile /home/rstudio/
+

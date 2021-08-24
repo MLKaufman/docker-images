@@ -2,9 +2,8 @@ version: '3'
 
 services:
   studioserver:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
+    image: rocker/rstudio-seurat
     volumes:
      - ./analysis/:/analysis
     ports:
