@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  lab:
+    build: .
+    image: jupyter/base
+    volumes:
+     - ./analysis/:/analysis
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_ENABLE_LAB=1
+    command: bash -c "
+      conda install fa2
+      && pip install -r /analysis/requirements.txt
+      && start-notebook.sh --ServerApp.root_dir=/analysis --ServerApp.token='' --ServerApp.password='sha1:b34f1c21e588:f9306c6a131f2fbac72014cae509b993c0da5df3'"
