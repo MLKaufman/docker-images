@@ -5,7 +5,7 @@ services:
     build: .
     image: jupyter/base
     volumes:
-     - ./analysis/:/analysis
+     - ./analysis/:/home/jovyan/analysis
     ports:
       - "8888:8888"
     environment:
@@ -13,4 +13,4 @@ services:
     command: bash -c "
       conda install fa2
       && pip install -r /analysis/requirements.txt
-      && start-notebook.sh --ServerApp.root_dir=/analysis --ServerApp.token='' --ServerApp.password='sha1:b34f1c21e588:f9306c6a131f2fbac72014cae509b993c0da5df3'"
+      && start-notebook.sh --ServerApp.root_dir=/home/jovyan/ --ServerApp.token='' --ServerApp.password='sha1:b34f1c21e588:f9306c6a131f2fbac72014cae509b993c0da5df3'"
