@@ -12,6 +12,7 @@ LABEL about.summary=""
 ################## SETUP ######################
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+USER root
 RUN apt-get clean all && \
     apt-get update && \
     apt-get upgrade -y && \
@@ -23,9 +24,11 @@ RUN apt-get clean all && \
     # fix conda related permissions while running root
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+
 # two options for settings up additional environments/packages at build time.
 #COPY environment.yml /home/jovyan/
-#RUN conda env create -f enhancerscanner.yml
+#RUN conda env create -f environment.yml
+#or
 #COPY requirements.txt /home/jovyan/
 #RUN pip install -r reuirements.txt && \
 #    pip cache purge
