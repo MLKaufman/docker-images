@@ -30,13 +30,14 @@ RUN apt-get clean all && \
 #RUN pip install -r reuirements.txt && \
 #    pip cache purge
 
-
-
 USER jovyan
 WORKDIR "${HOME}"
 
+# add a folder
 #ADD analysis /home/jovyan/
+
 ENV JUPYTER_ENABLE_LAB=1
 EXPOSE 8888
+
 # password = scrnaseq
 CMD ["start-notebook.sh", "--ServerApp.root_dir=/home/jovyan/", "--ServerApp.token=''", "--ServerApp.password='sha1:a4a5da289ac7:74fa573adba6a53e954e66ec23332ec0ec479322'"]
