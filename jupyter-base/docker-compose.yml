@@ -11,4 +11,4 @@ services:
     environment:
       - JUPYTER_ENABLE_LAB=1
     command: bash -c "
-      start-notebook.sh --ServerApp.root_dir=/home/jovyan/analysis/ --ServerApp.token='' --ServerApp.password='sha1:a4a5da289ac7:74fa573adba6a53e954e66ec23332ec0ec479322'"
+      start-notebook.sh --ServerApp.root_dir=/home/jovyan/analysis/ --ServerApp.token='' --ServerApp.password='sha1:a4a5da289ac7:74fa573adba6a53e954e66ec23332ec0ec479322'" 
