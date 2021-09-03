@@ -12,29 +12,36 @@ LABEL about.summary=""
 ################## SETUP ######################
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+USER root
 RUN apt-get clean all && \
     apt-get update && \
     apt-get upgrade -y && \
-    && apt-get clean all && \
+    apt-get clean all && \
     apt-get purge && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     conda update conda -n base && \
-    conda clean --all
+    conda clean --all && \
+    # fix conda related permissions while running root
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
+# two options for settings up additional environments/packages at build time.
 #COPY environment.yml /home/jovyan/
-#RUN conda env create -f enhancerscanner.yml
-
+#RUN conda env create -f environment.yml
+#or
 #COPY requirements.txt /home/jovyan/
 #RUN pip install -r reuirements.txt && \
 #    pip cache purge
 
-RUN fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
 USER jovyan
 WORKDIR "${HOME}"
 
-ADD analysis /home/jovyan/
+# add a folder
+#ADD analysis /home/jovyan/
+
 ENV JUPYTER_ENABLE_LAB=1
 EXPOSE 8888
-CMD ["start-notebook.sh", "--ServerApp.root_dir=/analysis", "--ServerApp.token=''", "--ServerApp.password='sha1:b34f1c21e588:f9306c6a131f2fbac72014cae509b993c0da5df3'"]
+
+# comment for standalone image execution and not running with docker-compose
+# password = scrnaseq
+#CMD ["start-notebook.sh", "--ServerApp.root_dir=/home/jovyan/analysis/", "--ServerApp.token=''", "--ServerApp.password='sha1:a4a5da289ac7:74fa573adba6a53e954e66ec23332ec0ec479322'"]
