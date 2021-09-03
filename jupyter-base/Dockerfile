@@ -42,5 +42,6 @@ WORKDIR "${HOME}"
 ENV JUPYTER_ENABLE_LAB=1
 EXPOSE 8888
 
+# comment for standalone image execution and not running with docker-compose
 # password = scrnaseq
-CMD ["start-notebook.sh", "--ServerApp.root_dir=/home/jovyan/analysis/", "--ServerApp.token=''", "--ServerApp.password='sha1:a4a5da289ac7:74fa573adba6a53e954e66ec23332ec0ec479322'"]
+#CMD ["start-notebook.sh", "--ServerApp.root_dir=/home/jovyan/analysis/", "--ServerApp.token=''", "--ServerApp.password='sha1:a4a5da289ac7:74fa573adba6a53e954e66ec23332ec0ec479322'"]
