@@ -19,8 +19,18 @@ RUN apt-get clean all && \
     apt-get clean all && \
     apt-get purge && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    conda update conda -n base && \
-    conda clean --all && \
+    conda update -n base conda && \
+    conda install -c conda-forge -c bioconda fa2 ipykernel && \
+    conda install R && \
+    pip --no-cache-dir install scanpy psutil leidenalg && \
+    conda clean --all
+
+#RUN Rscript -e "install.packages(repos = 'http://cran.us.r-project.org', c('rmarkdown', 'tidyverse', 'workflowr', 'BiocManager', 'Seurat', 'IRkernel'));" && \
+RUN Rscript -e "install.packages(repos = 'http://cran.us.r-project.org', c('rmarkdown', 'tidyverse', 'BiocManager', 'Seurat'), clean = TRUE, quiet = TRUE);"
+RUN Rscript -e "install.packages(repos = 'http://cran.us.r-project.org', c('IRkernel'), clean = TRUE, quiet = TRUE);" && \
+    Rscript -e "BiocManager::install(version = '3.13')" && \
+    Rscript -e "IRkernel::installspec(name = 'rkernel', displayname = 'R kernel', clean = TRUE, quiet = TRUE)" && \
+    # jupyter labextension install @techrah/text-shortcuts && \
     # fix conda related permissions while running root
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -45,3 +55,4 @@ EXPOSE 8888
 # comment for standalone image execution and not running with docker-compose
 # password = scrnaseq
 #CMD ["start-notebook.sh", "--ServerApp.root_dir=/home/jovyan/analysis/", "--ServerApp.token=''", "--ServerApp.password='sha1:a4a5da289ac7:74fa573adba6a53e954e66ec23332ec0ec479322'"]
+#ENTRYPOINT?
