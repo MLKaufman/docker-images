@@ -20,7 +20,7 @@ RUN apt-get clean all && \
     apt-get purge && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     conda update -n base conda && \
-    conda install -c conda-forge -c bioconda fa2 ipykernel && \
+    conda install -c conda-forge -c bioconda fa2 ipykernel c-compiler && \
     conda install R && \
     pip --no-cache-dir install scanpy psutil leidenalg && \
     conda clean --all
@@ -53,5 +53,5 @@ EXPOSE 8888
 
 # comment for standalone image execution and not running with docker-compose
 # password = scrnaseq
-#CMD ["start-notebook.sh", "--ServerApp.root_dir=/home/jovyan/analysis/", "--ServerApp.token=''", "--ServerApp.password='sha1:a4a5da289ac7:74fa573adba6a53e954e66ec23332ec0ec479322'"]
+CMD ["start-notebook.sh", "--ServerApp.root_dir=/home/jovyan/analysis/", "--ServerApp.token=''", "--ServerApp.password='sha1:a4a5da289ac7:74fa573adba6a53e954e66ec23332ec0ec479322'"]
 #ENTRYPOINT?
