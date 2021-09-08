@@ -25,11 +25,10 @@ RUN apt-get clean all && \
     pip --no-cache-dir install scanpy psutil leidenalg && \
     conda clean --all
 
-#RUN Rscript -e "install.packages(repos = 'http://cran.us.r-project.org', c('rmarkdown', 'tidyverse', 'workflowr', 'BiocManager', 'Seurat', 'IRkernel'));" && \
-RUN Rscript -e "install.packages(repos = 'http://cran.us.r-project.org', c('rmarkdown', 'tidyverse', 'BiocManager', 'Seurat'), clean = TRUE, quiet = TRUE);"
-RUN Rscript -e "install.packages(repos = 'http://cran.us.r-project.org', c('IRkernel'), clean = TRUE, quiet = TRUE);" && \
+RUN Rscript -e "install.packages(repos = 'http://cran.us.r-project.org', c('rmarkdown', 'tidyverse', 'BiocManager', 'Seurat'), clean = TRUE, quiet = TRUE);" && \
+    Rscript -e "install.packages(repos = 'http://cran.us.r-project.org', c('IRkernel'), clean = TRUE, quiet = TRUE);" && \
     Rscript -e "BiocManager::install(version = '3.13')" && \
-    Rscript -e "IRkernel::installspec(name = 'rkernel', displayname = 'R kernel', clean = TRUE, quiet = TRUE)" && \
+    Rscript -e "IRkernel::installspec(name = 'rkernel', displayname = 'R Kernel')" && \
     # jupyter labextension install @techrah/text-shortcuts && \
     # fix conda related permissions while running root
     fix-permissions "${CONDA_DIR}" && \
